@@ -19,3 +19,6 @@ SAVE_DIR             =  './model/base'
 RESTORE_MODEL_NAME   =  'base-9990.meta'
 
 
+dropout              = 0.4
+
+

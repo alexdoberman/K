@@ -37,6 +37,7 @@ def  main():
     input_shape  = (None, frame_count, feature_count)
     output_shape = (None, output_count)
 
+
     print ('--------------------------------------------------')
     print ('Train params:')
     print ('batch_size = {} frame_count = {} feature_count = {} output_count = {}'.format(batch_size, frame_count, feature_count, output_count))
@@ -51,11 +52,12 @@ def  main():
     with tf.name_scope('input'):
         x  = tf.placeholder(tf.float32, [None, frame_count, feature_count], name = "x")
         y_ = tf.placeholder(tf.float32, [None, output_count], name = "y_")
+        keep_prob = tf.placeholder(tf.float32, name = "keep_prob") 
     
 
     # Model define
     with tf.name_scope('model_deepnn'):
-        y = model_dnn(x, input_shape, output_shape)
+        y = get_model(x, input_shape, output_shape, keep_prob)
         y = tf.identity(y, "y")
 
     # Accuracy
@@ -87,14 +89,18 @@ def  main():
             if step % config.VALIDATION_FREQUENCY == 0:
                 x_batch_val, y_batch_val =  next(val_gen)
 
-                summary, accuracy = sess.run([merged, acc], feed_dict={x: x_batch_val, y_: y_batch_val})
+                summary, accuracy = sess.run([merged, acc], feed_dict={x: x_batch_val, 
+                                                                       y_: y_batch_val, 
+                                                                       keep_prob: 1.0})
                 test_writer.add_summary(summary, step)
                 print('Accuracy at step %s: %s' % (step, accuracy))
 
                 # Save the graph
                 saver.save(sess, config.SAVE_DIR, global_step = step)
             else:
-                summary, _ = sess.run([merged, train_step], feed_dict={x: x_batch, y_: y_batch})
+                summary, _ = sess.run([merged, train_step], feed_dict={x: x_batch, 
+                                                                       y_: y_batch,
+                                                                       keep_prob: config.dropout})
                 train_writer.add_summary(summary, step)
 
 
