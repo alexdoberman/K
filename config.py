@@ -9,7 +9,7 @@ name2id = {name: i for i, name in id2name.items()}
 
 LOG_DIR              =  './log'
 VALIDATION_FREQUENCY =  10
-BATCH_SIZE           =  16
+BATCH_SIZE           =  2
 
 MAX_STEPS            =  100000
 LR                   =  1e-4

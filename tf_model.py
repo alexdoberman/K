@@ -54,17 +54,18 @@ def model_cnn_v1(x, input_shape, output_shape, keep_prob):
 
     with tf.variable_scope("conv_1"):
         x = tf.layers.conv2d(x, filters = 32, kernel_size = (5, 5), padding='valid', activation = tf.nn.relu)
-        x = tf.layers.max_pooling2d(x, pool_size=(2, 2), strides=(1, 1))
+        x = tf.layers.max_pooling2d(x, pool_size=(2, 2), strides=2)
 
     with tf.variable_scope("conv_2"):
         x = tf.layers.conv2d(x, filters = 16, kernel_size = (5, 5), padding='valid', activation = tf.nn.relu)
-        x = tf.layers.max_pooling2d(x, pool_size=(2, 2), strides=(1, 1))
+        x = tf.layers.max_pooling2d(x, pool_size=(2, 2), strides=2)
 
     with tf.variable_scope("dropout_1"):
         x = tf.layers.dropout(x, rate = keep_prob )
 
     with tf.variable_scope("fc_1"):
-        x = tf.layers.flatten(x)
+#        x = tf.layers.flatten(x)
+        x = tf.contrib.layers.flatten(x)
         x = tf.layers.dense(x, units = 512, activation = tf.nn.relu)
 
     with tf.variable_scope("dropout_2"):

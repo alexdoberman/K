@@ -133,6 +133,7 @@ def  main():
 '''
 
 if __name__ == '__main__':
+    print ('tf.__version__ = ', tf.__version__)
     main()
     
     
