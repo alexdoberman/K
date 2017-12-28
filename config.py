@@ -9,14 +9,14 @@ name2id = {name: i for i, name in id2name.items()}
 
 LOG_DIR              =  './log'
 VALIDATION_FREQUENCY =  10
-BATCH_SIZE           =  2
+BATCH_SIZE           =  64
 
 MAX_STEPS            =  100000
 LR                   =  1e-4
 
 RESTORE_MODEL        = False
 SAVE_DIR             =  './model/base'
-RESTORE_MODEL_NAME   =  'base-9990.meta'
+RESTORE_MODEL_NAME   =  'base-99990.meta'
 
 
 dropout              = 0.4

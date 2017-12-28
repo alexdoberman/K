@@ -26,7 +26,7 @@ def  main():
 
     with tf.Session() as sess:
         #First let's load meta graph and restore weights
-        saver = tf.train.import_meta_graph('./model/base-19000.meta')
+        saver = tf.train.import_meta_graph('./model/' + config.RESTORE_MODEL_NAME)
         saver.restore(sess, tf.train.latest_checkpoint('./model'))
 
         graph = tf.get_default_graph()
