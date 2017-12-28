@@ -75,7 +75,7 @@ def  main():
         train_step = tf.train.AdamOptimizer(config.LR).minimize(loss)
 
     merged = tf.summary.merge_all()    
-    saver  = tf.train.Saver(max_to_keep=5)
+    saver  = tf.train.Saver(max_to_keep=config.MAX_TO_KEEP_MODELS)
 
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
@@ -86,6 +86,10 @@ def  main():
         for step in range(config.MAX_STEPS):
             x_batch, y_batch =  next(train_gen)
 
+            if step % config.SAVE_MODEL_FREQUENCY == 0:
+                # Save the graph
+                saver.save(sess, config.SAVE_DIR, global_step = step)
+
             if step % config.VALIDATION_FREQUENCY == 0:
                 x_batch_val, y_batch_val =  next(val_gen)
 
@@ -95,13 +99,14 @@ def  main():
                 test_writer.add_summary(summary, step)
                 print('Accuracy at step %s: %s' % (step, accuracy))
 
-                # Save the graph
-                saver.save(sess, config.SAVE_DIR, global_step = step)
-            else:
-                summary, _ = sess.run([merged, train_step], feed_dict={x: x_batch, 
-                                                                       y_: y_batch,
-                                                                       keep_prob: config.dropout})
-                train_writer.add_summary(summary, step)
+            
+            # Train
+            summary, _ = sess.run([merged, train_step], feed_dict={x: x_batch, 
+                                                                   y_: y_batch,
+                                                                   keep_prob: config.dropout})
+            train_writer.add_summary(summary, step)
+
+    
 
 
 
