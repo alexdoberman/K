@@ -20,7 +20,7 @@ LR                   =  1e-4
 
 RESTORE_MODEL        = False
 SAVE_DIR             =  './model/base'
-RESTORE_MODEL_NAME   =  'base-99990.meta'
+RESTORE_MODEL_NAME   =  'base-0.meta'
 
 
 dropout              = 0.4

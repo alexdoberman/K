@@ -9,7 +9,7 @@ from keras.layers import Conv2D, MaxPooling2D
 ######################################################
 # Factory function
 def get_model(x, input_shape, output_shape, keep_prob):
-    return model_cnn_v1(x, input_shape, output_shape, keep_prob)
+    return model_cnn_v2(x, input_shape, output_shape, keep_prob)
 
 
 def model_dnn(x, input_shape, output_shape):
@@ -61,7 +61,7 @@ def model_cnn_v1(x, input_shape, output_shape, keep_prob):
         x = tf.layers.max_pooling2d(x, pool_size=(2, 2), strides=2)
 
     with tf.variable_scope("dropout_1"):
-        x = tf.layers.dropout(x, rate = keep_prob )
+        x = tf.nn.dropout(x, keep_prob)
 
     with tf.variable_scope("fc_1"):
 #        x = tf.layers.flatten(x)
@@ -69,7 +69,7 @@ def model_cnn_v1(x, input_shape, output_shape, keep_prob):
         x = tf.layers.dense(x, units = 512, activation = tf.nn.relu)
 
     with tf.variable_scope("dropout_2"):
-        x = tf.layers.dropout(x, rate = keep_prob )
+        x = tf.nn.dropout(x, keep_prob)
 
     with tf.variable_scope("output_layer"):
         output_layer = tf.layers.dense(x, output_count)
@@ -100,7 +100,7 @@ def model_cnn_v2(x, input_shape, output_shape, keep_prob):
         x = tf.layers.max_pooling2d(x, pool_size=(2, 2), strides=2)
 
     with tf.variable_scope("dropout_1"):
-        x = tf.layers.dropout(x, rate = keep_prob )
+        x = tf.nn.dropout(x, keep_prob)
 
     with tf.variable_scope("fc_1"):
 #        x = tf.layers.flatten(x)
@@ -108,7 +108,7 @@ def model_cnn_v2(x, input_shape, output_shape, keep_prob):
         x = tf.layers.dense(x, units = 512, activation = tf.nn.relu)
 
     with tf.variable_scope("dropout_2"):
-        x = tf.layers.dropout(x, rate = keep_prob )
+        x = tf.nn.dropout(x, keep_prob)
 
     with tf.variable_scope("output_layer"):
         output_layer = tf.layers.dense(x, output_count)

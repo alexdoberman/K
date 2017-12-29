@@ -84,7 +84,9 @@ def  main():
         for i in range (len(testset)):
             print ('---------------------------')
             class_id, path, x_batch =  next(test_gen)
-            current_prediction      = sess.run(prediction, feed_dict={"input/x:0": x_batch})
+            current_prediction      = sess.run(prediction, feed_dict={"input/x:0": x_batch,
+                                                                      "input/keep_prob:0": 1.0})
+
             predict_class_id        = predict_by_score_1(current_prediction)
 
             print (class_id, config.id2name[class_id], path, x_batch.shape)

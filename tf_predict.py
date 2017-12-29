@@ -37,7 +37,10 @@ def  main():
 
         for i in range (len(predictset)):
             path, x_batch =  next(predict_gen)
-            current_prediction      = sess.run(prediction, feed_dict={"input/x:0": x_batch})
+
+            current_prediction      = sess.run(prediction, feed_dict={"input/x:0": x_batch,
+                                                                      "input/keep_prob:0": 1.0})
+
             predict_class_id        = np.argmax(current_prediction, axis=1)[0]
 
             predict_label = config.id2name[predict_class_id]
